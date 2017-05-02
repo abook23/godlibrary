@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">GodLibrary</string>
+    <string name="phone_err">手机号格式错误</string>
+    <string name="id_number_err">身份证格式错误</string>
+    <string name="email_err">邮箱格式错误</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="no_network_connection_toast">No network connection found</string>
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.god.widget.LinearLayoutSquare xmlns:android="http://schemas.android.com/apk/res/android"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/gridView_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_loader"/>
+
+        <TextView
+            android:id="@+id/select_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#A22B7847"
+            android:textSize="48sp"/>
+
+        <CheckBox
+            android:id="@+id/gridView_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:clickable="false"
+            android:focusable="false"
+            android:padding="4dp"/>
+    </FrameLayout>
+</com.god.widget.LinearLayoutSquare>

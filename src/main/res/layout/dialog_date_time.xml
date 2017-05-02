@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#eeffffff"
+    android:gravity="center">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TimePicker
+            android:visibility="gone"
+            android:id="@+id/date_time_timePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <DatePicker
+            android:id="@+id/date_time_datePicker1"
+            android:layout_width="wrap_content"
+            android:calendarViewShown="false"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+    <Button
+        android:id="@+id/date_time_but_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frameLayout"
+        android:text="确认" />
+
+</RelativeLayout>
