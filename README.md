@@ -7,6 +7,7 @@
 2. 参考 示例app
 
 # 使用方法
+![](https://pandao.github.io/editor.md/examples/images/4.jpg)
 
 ## 引用
 ```java
