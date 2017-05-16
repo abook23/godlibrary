@@ -25,21 +25,20 @@ import javax.crypto.Cipher;
 
 public class RSAUtlis {
 
-    /**
-     * try {
-     * Map<String,Object> RSAmap = RSAUtlis.initKey();
-     * String pu = RSAUtlis.getPublicKey(RSAmap);//公钥
-     * L.d(pu);
-     * String pr = RSAUtlis.getPrivateKey(RSAmap);//私钥
-     * L.d(pr);
-     * String deStr = RSAUtlis.encryptByPublicKey(value, pu);//公钥加密
-     * L.d(deStr);
-     * String ecStr = RSAUtlis.decryptByPrivateKey(deStr, pr);//私钥解密
-     * L.d(ecStr);
-     * } catch (Exception e) {
-     * e.printStackTrace();
-     * }
-     */
+    // try {
+    // Map<String,Object> RSAmap = RSAUtlis.initKey();
+    // String pu = RSAUtlis.getPublicKey(RSAmap);//公钥
+    // L.d(pu);
+    // String pr = RSAUtlis.getPrivateKey(RSAmap);//私钥
+    // L.d(pr);
+    // String deStr = RSAUtlis.encryptByPublicKey(value, pu);//公钥加密
+    // L.d(deStr);
+    // String ecStr = RSAUtlis.decryptByPrivateKey(deStr, pr);//私钥解密
+    // L.d(ecStr);
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // }
+
     public static final String KEY_ALGORITHM = "RSA";// KEY_ALGORITHM 指定的加密算法
     public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
 

@@ -2,6 +2,7 @@ package com.god.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.Dimension;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import java.util.Map;
 /**
  * Created by My on 2016/4/6.
  */
+@Deprecated
 public class SimpleAdapter extends BaseAdapter {
 
     private List<? extends Map<String, ?>> mData;
