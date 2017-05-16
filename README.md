@@ -7,7 +7,7 @@
 2. 参考 示例app
 
 # 使用方法
-![](https://github.com/abook23/godlibrary/blob/master/file/2.png)
+![](https://github.com/abook23/godlibrary/blob/master/file/3.png)
 
 ## 引用
 ```java
