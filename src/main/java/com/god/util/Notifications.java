@@ -114,7 +114,7 @@ public class Notifications {
      * @param notifyId id
      * @param sound    声音
      */
-    public void showIntentActivityNotify(String title, String content, String ticker, Class<?> activity, int notifyId, boolean sound) {
+    public void showIntentActivityNotify(String title, CharSequence content, String ticker, Class<?> activity, int notifyId, boolean sound) {
         // Notification.FLAG_ONGOING_EVENT --设置常驻 Flag;Notification.FLAG_AUTO_CANCEL 通知栏上点击此通知后自动清除此通知
 //		notification.flags = Notification.FLAG_AUTO_CANCEL; //在通知栏上点击此通知后自动清除此通知
         mBuilder.setAutoCancel(true)//点击后让通知将消失
@@ -136,6 +136,26 @@ public class Notifications {
         mNotificationManager.notify(notifyId, mBuilder.build());
     }
 
+    public void showIntentActivityNotify(String title, CharSequence content, String ticker, Intent intent, int notifyId, boolean sound) {
+        // Notification.FLAG_ONGOING_EVENT --设置常驻 Flag;Notification.FLAG_AUTO_CANCEL 通知栏上点击此通知后自动清除此通知
+//		notification.flags = Notification.FLAG_AUTO_CANCEL; //在通知栏上点击此通知后自动清除此通知
+        mBuilder.setAutoCancel(true)//点击后让通知将消失
+                .setContentTitle(title)
+                .setContentText(content)
+                .setTicker(ticker);
+        if (sound) {
+            mBuilder.setDefaults(Notification.DEFAULT_ALL);
+        } else {
+            mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
+        }
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(pendingIntent);
+
+        mNotificationManager.notify(notifyId, mBuilder.build());
+    }
+
     /**
      * 清除当前创建的通知栏
      */
@@ -154,6 +174,7 @@ public class Notifications {
 
     /**
      * 获取默认的pendingIntent,为了防止2.3及以下版本报错
+     *
      * @param flags 在顶部常驻:Notification.FLAG_ONGOING_EVENT
      * @return
      */
