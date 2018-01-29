@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.Locale;
 
 /**
- * Created by My on 2016/6/1.
+ * Created by abook23 on 2016/6/1.
  */
 public class AndroidUtils {
     /**

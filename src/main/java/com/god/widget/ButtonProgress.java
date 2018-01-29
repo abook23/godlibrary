@@ -13,7 +13,7 @@ import com.god.R;
 
 
 /**
- * Created by My on 2016/11/30.
+ * Created by abook23 on 2016/11/30.
  */
 
 public class ButtonProgress extends Button {

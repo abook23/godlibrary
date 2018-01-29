@@ -17,21 +17,26 @@
 package com.god.util;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
-import android.view.View;
-
-import com.god.dialog.DialogMsgBox;
-
 /**
  * Utility class that wraps access to the runtime permissions API in M and provides basic helper
  * methods.
+ * 使用方法
+ * 1.PermissionUtil.requestPermission
+ * 2.PermissionUtil.verifyPermissions
  */
 public abstract class PermissionUtil {
+
+    private static final String[] pGroup = {"CALENDAR", "CAMERA", "CONTACTS", "LOCATION", "MICROPHONE", "PHONE", "SENSORS", "SMS", "STORAGE"};
+    private static final String[] pGroupCN = {"日历", "相机", "联系人", "定位", "麦克风", "获取手机信息(手机号码/IMEI/IMSI权限)", "传感器", "SMS", "读写手机存储"};
+    private static AlertDialog alertDialog;
 
     /**
      * activity 中使用
@@ -47,49 +52,12 @@ public abstract class PermissionUtil {
         return _requestPermissions(fragment, permissions, request_contacts);
     }
 
-    /**
-     * Check that all given permissions have been granted by verifying that each entry in the
-     * given array is of the value {@link PackageManager#PERMISSION_GRANTED}.
-     *
-     * @see Activity#onRequestPermissionsResult(int, String[], int[])
-     */
-    public static boolean verifyPermissions(final Context context, String[] permissions, int[] grantResults) {
-        // At least one result must be checked.
-        String msg = "";
-
-        if (grantResults.length < 1) {
-            return false;
-        }
-
-        // Verify that each required permission has been granted, otherwise return false.
-        for (int i = 0; i < grantResults.length; i++) {
-            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                msg += getPermissionCN(permissions[i]) + "\n";
-            }
-        }
-        if (!TextUtils.isEmpty(msg)) {
-            final DialogMsgBox dialogMsgBox = new DialogMsgBox(context);
-            msg ="请授予以下权限:\n"+msg;
-            dialogMsgBox.show("权限请求", msg);
-            dialogMsgBox.but_ok.setText("去设置");
-            dialogMsgBox.but_ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialogMsgBox.dismiss();
-                    AndroidUtils.showInstalledAppDetails(context, context.getPackageName());
-                }
-            });
-            return false;
-        }
-        return true;
-    }
-
     private static boolean _requestPermissions(Object object, String[] permissions, int request_contacts) {
         if (permissions.length < 1) {
             return false;
         }
         if (object instanceof Activity) {
-            if (shouldShowRequestPermissionRationale((Activity) object, permissions))
+            if (shouldShowRequestPermissionRationale((Activity) object, permissions))//检查用户拒绝的权限
                 return false;
         }
         // Verify that each required permission has been granted, otherwise return false.
@@ -112,44 +80,90 @@ public abstract class PermissionUtil {
         return true;
     }
 
+    /**
+     * Check that all given permissions have been granted by verifying that each entry in the
+     * given array is of the value {@link PackageManager#PERMISSION_GRANTED}.
+     *
+     * @see Activity#onRequestPermissionsResult(int, String[], int[])
+     */
+    public static boolean verifyPermissions(Fragment fragment, String[] permissions, int[] grantResults) {
+        return verifyPermissions(fragment.getActivity(), permissions, grantResults);
+    }
+
+    public static boolean verifyPermissions(Activity activity, String[] permissions, int[] grantResults) {
+        // At least one result must be checked.
+        if (grantResults.length < 1) {
+            return false;
+        }
+
+        // Verify that each required permission has been granted, otherwise return false.
+        StringBuilder sb = new StringBuilder();
+        int m = 0;
+        for (int i = 0; i < grantResults.length; i++) {
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                sb.append(++m).append(".").append(getPermissionCN(permissions[i])).append("\n");
+            }
+        }
+        String msg = sb.toString();
+        if (msg.length() > 0) {
+            msg = "请授予以下权限:\n" + msg;
+            alertDialog(activity, "提示", msg);
+            return false;
+        }
+        return true;
+    }
 
     /**
      * 用户拒绝的权限
      */
-    private static boolean shouldShowRequestPermissionRationale(final Activity activity, String[] permissions) {
+    private static boolean shouldShowRequestPermissionRationale(Activity activity, String[] permissions) {
         StringBuilder msgbff = new StringBuilder();
         if (permissions.length < 1) {
             return false;
         }
         // Verify that each required permission has been granted, otherwise return false.
-        for (String p : permissions) {
+        int i = 0;
+        for (String permission : permissions) {
             //如果app之前请求过该权限,被用户拒绝, 这个方法就会返回true.
             //如果用户之前拒绝权限的时候勾选了对话框中”Don’t ask again”的选项,那么这个方法会返回false.
             //如果设备策略禁止应用拥有这条权限, 这个方法也返回false.
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, p)) {
-                msgbff.append(getPermissionCN(p)).append("\n");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {//禁止的权限
+                msgbff.append(++i).append(".").append(getPermissionCN(permission)).append("\n");
             }
         }
         String msg = msgbff.toString();
         if (msg.length() > 0) {
-            final DialogMsgBox dialogMsgBox = new DialogMsgBox(activity);
-            msg ="请授予以下权限:\n"+msg;
-            dialogMsgBox.show("权限请求", msg);
-            dialogMsgBox.but_ok.setText("去设置");
-            dialogMsgBox.but_ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialogMsgBox.dismiss();
-                    AndroidUtils.showInstalledAppDetails(activity, activity.getPackageName());
-                }
-            });
+            msg = "请授予以下权限:\n" + msg;
+            alertDialog(activity, "提示", msg);
             return true;
         }
         return false;
     }
 
-    private static final String[] pGroup = {"CALENDAR", "CAMERA", "CONTACTS", "LOCATION", "MICROPHONE", "PHONE", "SENSORS", "SMS", "STORAGE"};
-    private static final String[] pGroupCN = {"日历", "相机", "联系人", "位置", "麦克风", "手机", "传感器", "SMS", "存储"};
+    private static void alertDialog(final Context context, String title, String message) {
+        if (alertDialog != null && alertDialog.isShowing())
+            return;
+        alertDialog = new AlertDialog.Builder(context).setTitle(title)
+                .setMessage(message)
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        alertDialog = null;
+                    }
+                })
+                .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        alertDialog = null;
+                        AndroidUtils.showInstalledAppDetails(context, context.getPackageName());
+                    }
+                }).show();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+        alertDialog.setCancelable(false);
+    }
 
     private static String getPermissionCN(String p) {
         for (int i = 0; i < pGroup.length; i++) {

@@ -1,7 +1,7 @@
 package com.god.bean;
 
 /**
- * Created by My on 2016/9/14.
+ * Created by abook23 on 2016/9/14.
  */
 public class ExpChildBean {
     private Object imageUrl;

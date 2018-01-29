@@ -2,7 +2,6 @@ package com.god.spf;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 
 import java.util.Map;
 
@@ -10,7 +9,7 @@ import java.util.Map;
  * Created by abook23 on 2016/8/22.
  * E-mail abook23@163.com
  */
-public class Preference {
+public class SharedPreferencesManger {
     private Context context;
     private String defaultSpfName;
 
@@ -22,13 +21,13 @@ public class Preference {
         return defaultSpfName;
     }
 
-    public Preference(Context context, String spfName) {
+    public SharedPreferencesManger(Context context, String spfName) {
         this.context = context;
         this.defaultSpfName = spfName;
     }
 
-    public static Preference newInstance(Context context, String spfName) {
-        return new Preference(context, spfName);
+    public static SharedPreferencesManger newInstance(Context context, String spfName) {
+        return new SharedPreferencesManger(context, spfName);
     }
 
     public SharedPreferences getSharedPreferences(Context context) {

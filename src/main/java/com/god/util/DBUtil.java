@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * /**
- * Created by My on 2016/1/28.
+ * Created by abook23 on 2016/1/28.
  */
 public class DBUtil {
     public static <T> List<T> cursor2Bean(Cursor cursor, Class<T> c) throws IllegalAccessException, InstantiationException {

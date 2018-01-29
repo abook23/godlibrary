@@ -18,7 +18,7 @@ import com.god.util.EditTextWatcher;
 import com.god.util.StringUtils;
 
 /**
- * Created by My on 2016/9/9.
+ * Created by abook23 on 2016/9/9.
  */
 public class DialogEdit extends DialogFragment {
 

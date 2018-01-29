@@ -45,14 +45,7 @@ public class BaseViewHolder{
 
     private final LinkedHashSet<Integer> itemChildLongClickViewIds;
 
-
     public View convertView;
-
-    /**
-     * Package private field to retain the associated user object and detect a change
-     */
-    Object associatedObject;
-
 
     public BaseViewHolder(final View view) {
         this.views = new SparseArray<View>();

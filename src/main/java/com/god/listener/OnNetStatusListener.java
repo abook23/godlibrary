@@ -1,7 +1,7 @@
 package com.god.listener;
 
 /**
- * Created by My on 2016/3/25.
+ * Created by abook23 on 2016/3/25.
  */
 public interface OnNetStatusListener {
     /**

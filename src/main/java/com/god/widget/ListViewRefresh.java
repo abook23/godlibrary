@@ -19,7 +19,7 @@ import com.god.listener.OnRefreshListener;
 import java.text.SimpleDateFormat;
 
 /**
- * Created by My on 2016/3/18.
+ * Created by abook23 on 2016/3/18.
  */
 public class ListViewRefresh implements AbsListView.OnScrollListener, View.OnTouchListener {
     private static final String TAG = ListViewRefresh.class.toString();

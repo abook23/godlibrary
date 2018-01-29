@@ -293,29 +293,32 @@ public class FileUtils {
      *
      * @param filePath
      */
-    @Deprecated
     public void scannerFile(String... filePath) {
         MediaScannerConnection.scanFile(context, filePath, null, null);
     }
 
     /**
      * 程序通过发送下面的Intent启动MediaScanner服务扫描指定的文件
+     * 不兼容 7.0
      */
     public void scannerFile(File file) {
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Uri uri = Uri.fromFile(file);
-        intent.setData(uri);
-        context.sendBroadcast(intent);
+
+//        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        Uri uri = Uri.fromFile(file);
+//        intent.setData(uri);
+//        context.sendBroadcast(intent);
+        scannerFile(file.getPath());
     }
 
     /**
      * 程序通过发送下面的Intent启动MediaScanner服务扫描指定的目录：
      */
     public void scannerDir(File file) {
-        Intent intent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_DIR");
-        Uri uri = Uri.fromFile(file);
-        intent.setData(uri);
-        context.sendBroadcast(intent);
+//        Intent intent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_DIR");
+//        Uri uri = Uri.fromFile(file);
+//        intent.setData(uri);
+//        context.sendBroadcast(intent);
+        scannerFile(file.getPath());
     }
 
 

@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by My on 2016/4/6.
+ * Created by abook23 on 2016/4/6.
+ * 请使用 BaseSimpleAdapter
  */
 @Deprecated
 public class SimpleAdapter extends BaseAdapter {

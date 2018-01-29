@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.god.em.EditType;
 
 /**
- * Created by My on 2016/9/12.
+ * Created by abook23 on 2016/9/12.
  */
 public class EditTextWatcher implements TextWatcher, View.OnTouchListener {
     private boolean isDel;

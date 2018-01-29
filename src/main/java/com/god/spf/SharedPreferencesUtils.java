@@ -2,101 +2,94 @@ package com.god.spf;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.god.util.StringUtils;
 
 import java.util.Map;
 
 /**
- * Android 文件存储 2015年9月6日 10:12:21
- *
- * @author abook23
- * @version 1.0
+ * Created by abook23 on 2016/8/22.
+ * E-mail abook23@163.com
  */
 public class SharedPreferencesUtils {
+    private static SharedPreferencesManger PREFERENCE;
 
-    private SharedPreferences sharedPreferences;
-    private Context context;
-    private String name;
+    private SharedPreferencesUtils() {
+    }
 
-    public SharedPreferencesUtils(Context context, String name) {
-        this.context = context;
-        this.name = name;
-        sharedPreferences = context.getSharedPreferences(name, Context.MODE_APPEND);
+    /**
+     * 只初始化一次就可以了，建议在 baseApplication 初始化
+     *
+     * @param baseApplicationContent c
+     */
+    public static void initialize(Context baseApplicationContent) {
+        if (PREFERENCE == null) {
+            initialize(baseApplicationContent, SharedPreferencesManger.getDefaultSharedPreferencesName(baseApplicationContent));
+        } else {
+            Log.d("PreferenceUtils", "已经被初始化化了,若果想 打开多 spf,请使用 Preference ");
+        }
+    }
+
+    /**
+     * 只初始化一次就可以了，建议在 baseApplication 初始化
+     *
+     * @param baseApplicationContent c
+     */
+    public static void initialize(Context baseApplicationContent, String defaultName) {
+        if (PREFERENCE == null) {
+            PREFERENCE = SharedPreferencesManger.newInstance(baseApplicationContent, defaultName);
+        } else {
+            Log.d("PreferenceUtils", "已经被初始化化了,若果想 打开多 spf,请使用 Preference ");
+        }
+    }
+
+    private static void nullPointerException() {
+        if (PREFERENCE == null) {
+            throw new NullPointerException("not initialize ---  PreferenceUtils.initialize(context, Constants.SP_NAME);");
+        }
     }
 
 
-    public SharedPreferences getSharedPreferences() {
-        return sharedPreferences;
+    public static boolean putParam(String key, Object value) {
+        nullPointerException();
+        return PREFERENCE.putParam(key, value);
+    }
+
+    public static void putParam(Map<String, Object> params) {
+        nullPointerException();
+        PREFERENCE.putParam(params);
     }
 
 
-    public void updateSharedPreferences() {
-        sharedPreferences = context.getSharedPreferences(name, Context.MODE_APPEND);
+    public static String getParam(String key) {
+        nullPointerException();
+        return PREFERENCE.getParam(key);
     }
 
-    public void putString(String key, String value) {
-        Editor edt = sharedPreferences.edit();
-        edt.putString(key, value);
-        edt.commit();
+    public static String getParam(String key, String defValue) {
+        nullPointerException();
+        return PREFERENCE.getParam(key, defValue);
     }
 
-    public void putBoolean(String key, boolean value) {
-        Editor edt = sharedPreferences.edit();
-        edt.putBoolean(key, value);
-        edt.commit();
+    public static int getParam(String key, int defValue) {
+        nullPointerException();
+        return PREFERENCE.getParam(key, defValue);
     }
 
-    public void putInt(String key, int value) {
-        Editor edt = sharedPreferences.edit();
-        edt.putInt(key, value);
-        edt.commit();
+    public static boolean getParam(String key, boolean defValue) {
+        nullPointerException();
+        return PREFERENCE.getParam(key, defValue);
     }
 
-    public void putLong(String key, long value) {
-        Editor edt = sharedPreferences.edit();
-        edt.putLong(key, value);
-        edt.commit();
+    public static float getParam(String key, float defValue) {
+        nullPointerException();
+        return PREFERENCE.getParam(key, defValue);
     }
 
-    public Map<String, ?> getAll() {
-        return sharedPreferences.getAll();
-    }
-
-    public String getString(String key) {
-        return sharedPreferences.getString(key, null);
-    }
-
-    public String getString(String key, String defValue) {
-        return sharedPreferences.getString(key, defValue);
-    }
-
-
-    public int getInt(String key, int defValue) {
-        return sharedPreferences.getInt(key, defValue);
-    }
-
-
-    public long getLong(String key, long defValue) {
-        return sharedPreferences.getLong(key, defValue);
-    }
-
-
-    public float getFloat(String key, float defValue) {
-        return sharedPreferences.getFloat(key, defValue);
-    }
-
-
-    public boolean getBoolean(String key, boolean defValue) {
-        return sharedPreferences.getBoolean(key, defValue);
-    }
-
-
-    public boolean contains(String key) {
-        return sharedPreferences.contains(key);
+    public static long getParam(String key, long defValue) {
+        nullPointerException();
+        return PREFERENCE.getParam(key, defValue);
     }
 
     /**
@@ -104,10 +97,14 @@ public class SharedPreferencesUtils {
      *
      * @param key
      */
-    public void remove(String key) {
-        Editor edt = sharedPreferences.edit();
-        edt.remove(key);
-        edt.commit();
+    public static void remove(String key) {
+        nullPointerException();
+        PREFERENCE.remove(key);
+    }
+
+    public static boolean clearData() {
+        nullPointerException();
+        return PREFERENCE.clearData();
     }
 
     /**
@@ -115,8 +112,10 @@ public class SharedPreferencesUtils {
      *
      * @return
      */
-    public boolean clearData() {
-        return sharedPreferences.edit().clear().commit();
+    public boolean clearData(Context context, String spf_name) {
+        if (StringUtils.isEmpty(spf_name))
+            spf_name = SharedPreferencesManger.getDefaultSharedPreferencesName(context);
+        SharedPreferences spf = context.getSharedPreferences(spf_name, Context.MODE_PRIVATE);
+        return spf.edit().clear().commit();
     }
-
 }

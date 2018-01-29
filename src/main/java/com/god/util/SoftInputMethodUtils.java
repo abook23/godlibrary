@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 import com.god.listener.OnInputMethodListener;
 
 /**
- * Created by My on 2017/4/12.
+ * Created by abook23 on 2017/4/12.
  */
 
 public class SoftInputMethodUtils {

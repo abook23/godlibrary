@@ -1,7 +1,7 @@
 package com.god.util;
 
 /**
- * Created by My on 2016/1/28.
+ * Created by abook23 on 2016/1/28.
  */
 public class StringUtils {
 

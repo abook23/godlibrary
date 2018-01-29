@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by My on 2016/5/27.
+ * Created by abook23 on 2016/5/27.
  * 1
  */
 public abstract class AsyncThreadPool<Params, Progress, Result> {

@@ -3,7 +3,7 @@ package com.god.bean;
 import java.util.List;
 
 /**
- * Created by My on 2016/9/14.
+ * Created by abook23 on 2016/9/14.
  */
 public class ExpGroupBean {
     private Object imageUrl;//

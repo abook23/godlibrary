@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 /**
- * Created by My on 2016/5/4.
+ * Created by abook23 on 2016/5/4.
  */
 
 public class LinearLayoutScroll extends LinearLayout implements AbsListView.OnScrollListener, View.OnTouchListener {

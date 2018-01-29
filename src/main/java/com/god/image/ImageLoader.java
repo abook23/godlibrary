@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Created by My on 2016/5/16.
+ * Created by abook23 on 2016/5/16.
  */
 public class ImageLoader {
 
