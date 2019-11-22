@@ -1,4 +1,4 @@
-package com.god.util;
+package com.god.widget;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

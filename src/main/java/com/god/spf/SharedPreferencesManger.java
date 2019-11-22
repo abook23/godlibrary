@@ -17,20 +17,20 @@ public class SharedPreferencesManger {
         return context;
     }
 
-    public String getDefaultSpfName() {
-        return defaultSpfName;
-    }
-
-    public SharedPreferencesManger(Context context, String spfName) {
-        this.context = context;
-        this.defaultSpfName = spfName;
-    }
-
     public static SharedPreferencesManger newInstance(Context context, String spfName) {
         return new SharedPreferencesManger(context, spfName);
     }
 
-    public SharedPreferences getSharedPreferences(Context context) {
+    public static SharedPreferencesManger newInstance(Context context) {
+        return new SharedPreferencesManger(context, getDefaultSharedPreferencesName(context));
+    }
+
+    private SharedPreferencesManger(Context context, String spfName) {
+        this.context = context;
+        this.defaultSpfName = spfName;
+    }
+
+    private SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(defaultSpfName, Context.MODE_PRIVATE);
     }
 

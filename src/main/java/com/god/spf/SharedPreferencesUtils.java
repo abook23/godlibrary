@@ -112,7 +112,7 @@ public class SharedPreferencesUtils {
      *
      * @return
      */
-    public boolean clearData(Context context, String spf_name) {
+    public static boolean clearData(Context context, String spf_name) {
         if (StringUtils.isEmpty(spf_name))
             spf_name = SharedPreferencesManger.getDefaultSharedPreferencesName(context);
         SharedPreferences spf = context.getSharedPreferences(spf_name, Context.MODE_PRIVATE);

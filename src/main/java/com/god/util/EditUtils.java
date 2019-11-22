@@ -3,6 +3,7 @@ package com.god.util;
 import android.widget.EditText;
 
 import com.god.em.EditType;
+import com.god.widget.EditTextWatcher;
 
 /**
  * Created by abook23 on 2016/9/12.

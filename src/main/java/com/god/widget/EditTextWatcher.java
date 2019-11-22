@@ -1,4 +1,4 @@
-package com.god.util;
+package com.god.widget;
 
 import android.text.Editable;
 import android.text.InputType;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.god.em.EditType;
+import com.god.util.StringUtils;
 
 /**
  * Created by abook23 on 2016/9/12.

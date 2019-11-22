@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.god.R;
 import com.god.em.EditType;
 import com.god.util.CheckUtils;
-import com.god.util.EditTextWatcher;
+import com.god.widget.EditTextWatcher;
 import com.god.util.StringUtils;
 
 /**

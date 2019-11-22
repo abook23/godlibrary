@@ -3,6 +3,7 @@ package com.god.util;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -13,8 +14,8 @@ import android.widget.TextView;
  * 校验
  *
  * @author Comsys-anook23
- * 
- *2015-5-28 下午2:38:09
+ * <p>
+ * 2015-5-28 下午2:38:09
  */
 public class CheckUtils extends StringUtils {
 
@@ -25,7 +26,6 @@ public class CheckUtils extends StringUtils {
      * @param password1
      * @param password2
      * @return boolean    返回类型
-     * 
      */
     public static boolean isPasswordSame(EditText password1, EditText password2) {
         boolean b = true;
@@ -42,17 +42,16 @@ public class CheckUtils extends StringUtils {
 
     /**
      * 判断textView 是否有空  ( "" || null)
-     * 
      */
     public static boolean isNullTextView(int Color, String msg, TextView... textViews) {
         boolean b = false;
-        for (int i = 0; i < textViews.length; i++) {
-            if (isEmpty(textViews[i].getText().toString())) {
+        for (TextView textView : textViews) {
+            if (isEmpty(textView.getText().toString())) {
                 if (!isEmpty(msg)) {
-                    textViews[i].setHint(msg);
+                    textView.setHint(msg);
                 }
                 if (Color != -1)
-                    textViews[i].setHintTextColor(Color);
+                    textView.setHintTextColor(Color);
                 return true;
             }
         }
@@ -61,17 +60,18 @@ public class CheckUtils extends StringUtils {
 
     /**
      * 判断textView 是否有空  ( "" || null)
-     * 
      */
-    public static boolean isNullEditView(int Color, String msg, EditText... edt) {
+    public static boolean isNullEditView(int Color, String msg, EditText... editTexts) {
         boolean b = false;
-        for (int i = 0; i < edt.length; i++) {
-            if (isNull(edt[i].getText().toString())) {
-                if (!isNull(msg)) {
-                    edt[i].setHint(msg);
+        for (EditText editText : editTexts) {
+            if (isEmpty(editText.getText().toString())) {
+                if (!isEmpty(msg)) {
+                    editText.setHint(msg);
                 }
                 if (Color != -1)
-                    edt[i].setHintTextColor(Color);
+                    editText.setHintTextColor(Color);
+                editText.setSelection(0);
+                editText.requestFocus();
                 return true;
             }
         }
@@ -146,10 +146,9 @@ public class CheckUtils extends StringUtils {
     /**
      * 默认红色
      *
-     * @paramedt    设定文件
      * @return void    返回类型
-     *  setHintTextColor
-     * 
+     * setHintTextColor
+     * @paramedt 设定文件
      */
     private static void setHintTextColor(EditText edt) {
         setHintTextColor(Color.RED, edt);

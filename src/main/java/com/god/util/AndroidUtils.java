@@ -8,11 +8,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
@@ -152,6 +155,20 @@ public class AndroidUtils {
         listener.onNetStatus(netType, netName);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void requestNetwork(Context context, ConnectivityManager.NetworkCallback networkCallback) {
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkRequest.Builder builder = new NetworkRequest.Builder();
+
+        NetworkRequest request = builder
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .build();
+        mConnectivityManager.requestNetwork(request, networkCallback);
+    }
+
     /**
      * GPS 是否打开
      * GPS 设置
@@ -215,17 +232,17 @@ public class AndroidUtils {
     public static void showInstalledAppDetails(Context context, String packageName) {
         Intent intent = new Intent();
         final int apiLevel = Build.VERSION.SDK_INT;
-        if (apiLevel >= 9) { // 2.3（ApiLevel 9）以上，使用SDK提供的接口
+        if (apiLevel >= 9) {
+            // 2.3（ApiLevel 9）以上，使用SDK提供的接口
             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             Uri uri = Uri.fromParts(SCHEME, packageName, null);
             intent.setData(uri);
-        } else { // 2.3以下，使用非公开的接口（查看InstalledAppDetails源码）
-// 2.2和2.1中，InstalledAppDetails使用的APP_PKG_NAME不同。
-            final String appPkgName = (apiLevel == 8 ? APP_PKG_NAME_22
-                    : APP_PKG_NAME_21);
+        } else {
+            // 2.3以下，使用非公开的接口（查看InstalledAppDetails源码）
+            // 2.2和2.1中，InstalledAppDetails使用的APP_PKG_NAME不同。
+            String appPkgName = (apiLevel == 8 ? APP_PKG_NAME_22 : APP_PKG_NAME_21);
+            intent.setClassName(APP_DETAILS_PACKAGE_NAME, APP_DETAILS_CLASS_NAME);
             intent.setAction(Intent.ACTION_VIEW);
-            intent.setClassName(APP_DETAILS_PACKAGE_NAME,
-                    APP_DETAILS_CLASS_NAME);
             intent.putExtra(appPkgName, packageName);
         }
         context.startActivity(intent);
@@ -234,15 +251,7 @@ public class AndroidUtils {
 
     public static void call(Activity activity, String number) {
         //用intent启动拨打电话
-
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number));
             activity.startActivity(intent);
         }
@@ -327,7 +336,7 @@ public class AndroidUtils {
         return cachePath + File.separator + uniqueName;
     }
 
-    public int dp2px(Context context, float dipValue) {
+    public static int dp2px(Context context, float dipValue) {
         float m = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * m + 0.5f);
     }

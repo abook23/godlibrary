@@ -32,7 +32,7 @@ import android.support.v4.content.ContextCompat;
  * 1.PermissionUtil.requestPermission
  * 2.PermissionUtil.verifyPermissions
  */
-public abstract class PermissionUtil {
+public class PermissionUtil {
 
     private static final String[] pGroup = {"CALENDAR", "CAMERA", "CONTACTS", "LOCATION", "MICROPHONE", "PHONE", "SENSORS", "SMS", "STORAGE"};
     private static final String[] pGroupCN = {"日历", "相机", "联系人", "定位", "麦克风", "获取手机信息(手机号码/IMEI/IMSI权限)", "传感器", "SMS", "读写手机存储"};
